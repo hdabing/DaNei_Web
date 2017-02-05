@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+
+	//定义JSON对象数组
+	var cities=[
+	            {"id":"01","name":"广州市"},
+	            {"id":"02","name":"深圳市"},
+	            {"id":"03","name":"北京市"}
+	            ];
+	//遍历获取JSON对象数组中的属性值，将option添加到select中
+	$(function() {
+		for(var i=0;i<cities.length;i++){
+			var id=cities[i].id;
+			var name=cities[i].name;
+			var s_option='<option value="'+id+'">'+name+'</option>';
+			var $opt=$(s_option);//将字符串转化为jQuery对象
+			//将option添加到select中
+			$("#provice").append($opt);
+		}
+	});
+	//将内容显示到span中，将li添加到ul中
+	$(function() {
+		$("#provice").change(function(){
+			//获取当前选中的option内容
+			var value=$("#provice option:selected").text();
+			//将内容显示到span中
+			$("#name_span").html(value);
+			
+			var list="<li>"+value+"</li>";
+			var $ul_li=$(list);//将字符串转化为jQuery对象
+			//将li添加到ul中
+			$("#city_list").append($ul_li);
+		});
+		
+	});
+	//清空ul的内容
+	$(function() {
+		$("#clear").click(function(){
+			//清空ul的内容
+			//$("#city_list").empty();
+			$("#city_list li").remove();
+		});
+	});
+</script>
+</head>
+<body>
+	城市：
+	<select id="provice">
+	</select>
+	您选择的是：
+	<span id="name_span"></span>
+	<p>选择列表：</p>
+	<ul id="city_list">
+	</ul>
+	<button id="clear">清空</button>
+</body>
+</html>

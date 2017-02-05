@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>联动菜单</title>
+    <script type="text/javascript">
+    //二维数组： 存储课程信息
+    var projectArray = new Array();
+    projectArray[0] = ["请选择"];
+    projectArray[1] = ["CoreJava", "Oracle", "JSP", "JDBC"];
+    projectArray[2] = ["PS", "CSS"];
+    projectArray[3] = ["PHP", "MySql", "Jquery"];
+
+    //根据所选择的方向写入课程
+    function classChanged() {
+    //得到方向的选择索引以及相应的数组
+    var i = document.getElementById("selClass").selectedIndex;
+    var data = projectArray[i];
+    //得到课程选择框对象
+    var selObj = document.getElementById("selProject");
+    //删除原有选项
+    while (selObj.childNodes.length > 0) {
+    selObj.removeChild(selObj.lastChild);
+    }
+    /*清空内容比全部移除removeChild更简单*/
+    /* selObj.innerHTML = " ";*/
+    /*或者设置其options长度为0也可以清空内容*/
+    /*selObj.options.length = 0;*/
+
+    //循环数组， 写入新的 option 对象
+    for (var i = 0; i < data.length; i++) {
+    var optionObj = document.createElement("option");
+    optionObj.value = i;
+    optionObj.innerHTML = data[i];
+    selObj.appendChild(optionObj);
+    }
+    }
+    </script>
+  </head>
+  <body>
+    <!--实现联动菜单-->
+    方向：
+    <select id="selClass" onchange="classChanged();">
+      <option>请选择</option>
+      <option>JSD</option>
+      <option>UID</option>
+      <option>PHP</option>
+    </select>
+    &nbsp;&nbsp;
+    课程：
+    <select id="selProject">
+      <option>请选择</option>
+    </select>
+  </body>
+</html>

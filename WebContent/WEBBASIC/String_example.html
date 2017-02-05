@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>String对象的例子演示</title>
+    <script type="text/javascript">
+        /*查找输入字符串中js出现的次数*/
+        function searchString() {
+            var str = document.getElementById("txtString1").value;
+            /*定义变量以记载子字符串 js 出现的次数*/
+            var count = 0;
+            /*使用 string 对象的 indexOf 方法得到子字符串 js 出现的位置，并循环判断*/
+            //得到第一个 js 出现的位置
+            var index = str.indexOf("js", 0);
+            while (index > -1) {
+                count++;
+                //查找下一个 js
+                index = str.indexOf("js", index + 2);
+            }
+            alert("js出现的次数：" + count);
+        }
+        function searchStringAndReplace() {
+            var str = document.getElementById("txtString2").value;
+            var count = 0;
+            //查找并替换文本框中录入的子字符串 js 为 *
+            var index = str.indexOf("js", 0);
+            while (index > -1) {
+                str = str.replace("js", "*");
+                index = str.indexOf("js", index + 1);
+            }
+            document.getElementById("txtString2").value = str;
+        }
+        function stringByRegex() {
+            var str = document.getElementById("txtString3").value;
+            /*定义正则表达式，并匹配文本中的子字符串 js*/
+            var result = str.match(/js/gi);
+            /*替换文本中的子字符串 js 为 * */
+            document.getElementById("txtString3").value = str.replace(/js/gi, "*");
+            alert("共替换了" + result.length + "处。 ");
+
+        }
+
+    </script>
+</head>
+<body>
+
+<h1 align="center">String对象的例子演示</h1>
+
+<h3>查询指定字符的数量</h3>
+<input type="text" id="txtString1"/><br/>
+<input type="button" value="查找字符" onclick="searchString();"/>
+<hr>
+<h3>查询指定字符的数量</h3>
+<input type="text" id="txtString2"/><br/>
+<input type="button" value="查找字符" onclick="searchStringAndReplace();"/>
+<hr>
+<h3>字符查询与过滤（使用正则表达式）</h3>
+<input type="text" id="txtString3"/><br/>
+<input type="button" value="字符查询与过滤（使用正则表达式）" onclick="stringByRegex ();"/>
+</body>
+</html>

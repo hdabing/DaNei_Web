@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>表格行的增加和删除操作</title>
+    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    <style>
+        table {
+            width: 300px;
+            /*消除单元格边距*/
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        tr.header td {
+            background-color: #ddd;
+            height: 40px;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+
+        td {
+            border: 1px solid gray;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12pt;
+        }
+    </style>
+    <script type="text/javascript">
+        //为表格添加行
+        function addRow() {
+            //得到表格对象
+            var $table = $("#table1");
+            /*var table = document.getElementById("table1");*/
+            //insertRow创建新行
+            var row = $table.insertRow($table.rows.length);
+
+            //insertCell为行创建 id 单元格
+            var idCell = row.insertCell(0);
+            idCell.text($("#txtID").val());
+
+            //insertCell为行创建 name 单元格
+            var nameCell = row.insertCell(1);
+            nameCell.text($("#txtName").val());
+
+            //insertCell为行创建 price 单元格
+            var priceCell = row.insertCell(2);
+            priceCell.text($("#txtPrice").val());
+
+            //insertCell为行创建操作按钮的单元格
+            var buttonCell = row.insertCell(3);
+
+            //createElement新建一个input元素--删除按钮
+            var button = buttonCell.after("input");
+            button.type = "button";
+            button.val("删除");
+
+            //onclick单击删除按钮通过delFunc()方法判断是否删除
+            button.onclick = function () {
+                delFunc(this);
+            };
+            /*appendChild(newNode)：为某节点追加子节点，即将参数 newNode 作为新节点添加为父节点的最后一个子节点；
+             insertBefore(newNode,refNode)：为某节点插入子节点，即将参数 newNode 作为新节点
+             插入到父节点的原有子节点 refNode 之前，实现选择性的加入子节点。*/
+            buttonCell.appendChild(button);
+        }
+        //删除按钮的单击事件
+        function delFunc(btnObj) {
+            //通过确认框来判断是否删除当前行，true则删除，false则return结束取消
+            var isDel = confirm("真的要删除吗？ ");
+            if (!isDel)
+                return;
+            //通过它的爷爷节点，找到当前行的 ID
+
+            var id = $(btnObj).parent().next().text();
+
+            //循环行， 根据 id 定位需要删除的行， 并删除
+            var $table = $("#table1");
+            for (var i = 1; i < $table.rows.length; i++) {
+                if ($table.rows.eq[i].eq(0).text() == id) {
+                    //deleteRow删除对应的表格行
+                    $table.deleteRow(i);
+                    break;
+                }
+            }
+            //提示
+            alert("删除 ID 为 " + id + " 的数据。 ");
+        }
+        //保存数据
+        function saveData() {
+            //定义数组，用于存储数据
+            var datas = new Array();
+
+            //循环表格，并收集数据
+            var $table = $("#table1");
+            for (var i = 1; i < $table.rows.length; i++) {
+                //获得页面的数据
+
+                var id = $table.rows.eq(i).eq(0).text();
+                var name = $table.rows.eq(i).eq(1).text();
+                var price = $table.rows.eq(i).eq(2).text();
+
+                //定义对象以封装数据
+                var o = new Data(id, name, price);
+                datas[i - 1] = o;
+            }
+
+            //提交数据（测试数据）
+            for (var i = 0; i < datas.length; i++) {
+                datas[i].show();
+            }
+        }
+
+        //自定义对象
+        function Data(id, n, p) {
+            //属性
+            this.id = id;
+            this.name = n;
+            this.price = p;
+
+            //方法
+            this.show = function () {
+                alert("id：" + this.id + "\nname：" + this.name + "\nprice："
+                + this.price)
+            };
+        }
+        /* 输入框的文本添加到select下拉列表中 */
+        function addChild() {
+            //1.获取对象
+            var $inputEle =$("#names");
+            var $selEle =$("#cities");
+            //2.获取文本框的值
+            var txt = $inputEle.val();
+            //3.创建Option对象(构造函数方式)
+            var optEle = new Option(txt, '', false, true);
+            //4.将Option对象添加到select对象
+            $selEle.add(optEle);
+            //5.清除文本框的值
+            $inputEle.val();
+        }
+        /* 清除下拉列表的OPTION */
+        function clearOptions() {
+            //1.获取对象
+            var $selEle =$("#cities");
+            //2.清理Option对象
+            /*
+             for(var i = 0; i< $selEle.options.length;i++){
+             $selEle.remove(i);
+             i--;
+             }
+             */
+            /* 清空Option对象的内容，设置长度为0比移除更方便 */
+            $selEle.options.length = 0;
+        }
+    </script>
+</head>
+<body>
+<h1>表格行的增加和删除操作</h1>
+ID：
+<input type="text" id="txtID"/>
+Name：
+<input type="text" id="txtName"/>
+Price：
+<input type="text" id="txtPrice"/>
+<input type="button" value="增加" onclick="addRow();"/>
+<br/>
+<br/>
+<table id="table1">
+    <tr class="header">
+        <td>产品 ID</td>
+        <td>产品名称</td>
+        <td>产品价格</td>
+        <td>操作</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>book1</td>
+        <td>20</td>
+        <td>
+            <input type="button" value="删除" onclick="delFunc(this);"/>
+        </td>
+    </tr>
+</table>
+<input type="button" value="保存" onclick="saveData();"/>
+
+<h1>输入框的文本添加到select下拉列表中</h1>
+<input type="text" id="names"/>
+<br/>
+<br/>
+<select id="cities">
+</select>
+<br/>
+<br/>
+<input onclick="addChild()" type="button" value="文本添加到下拉列表"/>
+<input onclick="clearOptions()" type="button" value="清除下拉列表的OPTION"/>
+</body>
+</html>

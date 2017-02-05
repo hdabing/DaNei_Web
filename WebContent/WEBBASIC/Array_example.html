@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>数组倒转与排序</title>
+    <script type="text/javascript">
+        //数组反转与排序
+        function operateArray(t) {
+            var array = document.getElementById("txtNumbers").value.split(",");
+            switch (t) {
+                case 1:
+                    array.reverse();
+                    break;
+                case 2:
+                    array.sort();
+                    break;
+                case 3:
+                     array.sort(sortFunc);
+                    break;
+            }
+            alert(array.toString());
+        }
+        function sortFunc(a, b) {
+            return a - b;
+        }
+    </script>
+</head>
+<body>
+<h1>数组倒转与排序</h1>
+<input type="text" id="txtNumbers" value="12,4,3,123,51"/>
+<input type="button" value="数组倒转" onclick="operateArray(1);"/>
+<input type="button" value="数组排序（ 文本） " onclick="operateArray(2);"/>
+<input type="button" value="数组排序（ 数值） " onclick="operateArray(3);"/>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>多选框的内容添加与移除</title>
+    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+        #main {
+            width: 720px;
+            margin: 20px auto;
+        }
+
+        #left, #middle, #right {
+            float: left;
+            text-align: center;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+
+        #middle {
+            width: 100px;
+            border-left: 0;
+            border-right: 0;
+        }
+
+        #middle p {
+            margin-top: 45px;
+        }
+
+        select {
+            margin: 50px;
+            width: 200px;
+            height: 300px;
+        }
+
+        option {
+            padding: 10px;
+            text-align: center;
+        }
+
+        input {
+            border: 2px solid #ccc;
+            background-color: #fff;
+            width: 60px;
+            height: 40px;
+            font-size: 25px;
+        }
+    </style>
+    <script type="text/javascript">
+        /*将左边选择的选项全部移到右边的下拉选菜单中*/
+        function add_all() {
+            var $select = $("#left select").children().sibling();
+            for (var i = 0; i < $select().length; i++) {
+                alert(select.eq(i).children().eq(i).text());
+            }
+        }
+        /*将左边选择的一个选项移到右边的下拉选菜单中*/
+        function add_one() {
+
+        }
+        /*将右边选择的选项全部移到左边的下拉选菜单中*/
+        function remove_all() {
+
+        }
+        /*将右边选择的一个选项移到左边的下拉选菜单中*/
+        function remove_one() {
+
+        }
+    </script>
+</head>
+<body>
+<h1>多选</h1>
+
+<div id="main">
+    <div id="left">
+        <!--设置select下拉菜单的multiple属性,可实现多选-->
+        <select multiple>
+            <option>上海市</option>
+            <option>北京市</option>
+            <option>天津市</option>
+            <option>济南市</option>
+            <option>广州市</option>
+            <option>深圳市</option>
+            <option>南宁市</option>
+            <option>柳州市</option>
+            <option>中山市</option>
+            <option>武汉市</option>
+            <option>南京市</option>
+            <option>杭州市</option>
+        </select>
+    </div>
+    <div id="middle">
+        <p><input type="button" value=">" onclick="add_all();"/></p>
+
+        <p><input type="button" value=">>" onclick="add_one();"/></p>
+
+        <p><input type="button" value="&lt;" onclick="remove_all();"/></p>
+
+        <p><input type="button" value="&lt;&lt;" onclick="remove_one();"/></p>
+
+    </div>
+    <div id="right">
+        <select multiple>
+            <option></option>
+        </select>
+
+        <div style="clear: both;border: 0"></div>
+    </div>
+</div>
+</body>
+</html>
