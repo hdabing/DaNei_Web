@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>jquery动画</title>
+    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    <style type="text/css">
+        #msg {
+            border: 2px solid #ccc;
+            width: 100px;
+            height: 20px;
+            text-align: center;
+            background-color: #ddd;
+            display: none;
+        }
+
+        img {
+            position: relative;
+        }
+
+        div {
+            background-color: #98bf21;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#b1").click(f1);
+            $("#b2").click(f2);
+            $("#b3").click(f3);
+            $("#b4").click(f4);
+            $("#b5").click(f5);
+        });
+        /*将图片显示*/
+        function f1() {
+            $("img").show(2000);
+            /*$("img").slideDown(2000);*/
+            /* $("img").fadeIn(2000);*/
+
+
+        }
+        /*将图片隐藏*/
+        function f2() {
+            $("img").hide(2000);
+            /*  $("img").slideUp(2000);*/
+            /* $("img").fadeOut(2000);*/
+
+        }
+        /*动态弹出提示信息*/
+        function f3() {
+            $("#msg").fadeIn(3000).fadeOut(500);
+        }
+        /*移动图片位置*/
+        function f4() {
+            /*{"left":"500px"}是偏移量，表示以左侧为基准，向右偏移200px,还要设置图片的布局为相对定位，脱离流定位*/
+            $("img").animate({"left": "250px"}, 1000).animate({"top": "100px"}, 1000);
+        }
+        /*拉伸div图片*/
+        function f5() {
+            $("div").animate({"height": "200px"}, 1000).animate({"width": "200px"}, 1000)
+                    .animate({"height": "100px"}, 1000).animate({"width": "100px"}, 1000);
+
+        }
+    </script>
+</head>
+<body>
+<h1>jquery动画</h1>
+
+<p>
+    <button id="b1">显示</button>
+    <button id="b2">隐藏</button>
+    <button id="b3">提示</button>
+    <button id="b4">移动</button>
+    <button id="b5">拉伸</button>
+</p>
+<img src="../images/hero.png">
+
+<p id="msg">操作成功！</p>
+
+<div></div>
+<div></div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>字体大小变化--JS和JQuery不同实现</title>
+    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    <script type="text/javascript">
+        function big_js() {
+
+            /*获取所有的p元素组成的数组*/
+            var ps = document.getElementsByTagName("p");
+
+            /*遍历数组，修改每个元素的字体大小*/
+            for (var i = 0; i < ps.length; i++) {
+                var p = ps[i];
+                /*原始字体大小*/
+                var font_size = p.style.fontSize;
+                /*字体大小强转设置为整数*/
+                var size = parseInt(font_size.replace("px", ""));
+                /*size+1赋值给p*/
+                p.style.fontSize = (size + 1) + "px";
+            }
+        }
+        function small_js() {
+
+            /*获取所有的p元素组成的数组*/
+            var ps = document.getElementsByTagName("p");
+
+            /*遍历数组，修改每个元素的字体大小*/
+            for (var i = 0; i < ps.length; i++) {
+                var p = ps[i];
+                /*原始字体大小*/
+                var font_size = p.style.fontSize;
+                /*使用replace提取字体数值，字体大小强转设置为整数*/
+                var size = parseInt(font_size.replace("px", ""));
+                /*size-1赋值给p*/
+                p.style.fontSize = (size - 1) + "px";
+            }
+        }
+        function big_jquery() {
+
+            var font_size = $("p").css("font-size");
+
+            var size = parseInt(font_size.replace("px", ""));
+
+            $("p").css("font-size", (size + 1) + "px");
+
+        }
+        function small_jquery() {
+
+            var font_size = $("p").css("font-size");
+
+            var size = parseInt(font_size.replace("px", ""));
+
+            $("p").css("font-size", (size - 1) + "px");
+        }
+    </script>
+</head>
+<body>
+<h3>字体大小变化--JS的实现</h3>
+
+<button onclick="big_js()">+</button>
+<button onclick="small_js()">-</button>
+
+<h3>字体大小变化--JQuery的实现</h3>
+<button onclick="big_jquery()">+</button>
+<button onclick="small_jquery()">-</button>
+
+<h1>JQuery的使用步骤</h1>
+
+<p style="font-size:14px ">1.引入JQuery</p>
+
+<p style="font-size:14px ">2.使用JQuery的元素选择器</p>
+
+<p style="font-size:14px ">3.调用JQuery的方法操作</p>
+</body>
+</html>

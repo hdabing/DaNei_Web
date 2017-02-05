@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style>
+#d1 {
+	width: 500px;
+	height: 250px;
+	border: 1px solid red;
+	background-color: #fff8dc;
+	margin: 20 auto;
+}
+
+span {
+	font-weight: bold;
+	padding-right: 1em;
+	vertical-align: top span.error{
+    background:url("../img/ok.png") no-repeat 0px 0px padding-left: 16px;
+}
+
+span.success {
+	background: url("../img/ok.png" ") no-repeat 0px 0px;
+	padding-left: 16px;
+}
+</style>
+<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript"> $(function(){
+    $("#signupForm").validate(
+    { rules:
+    { username:
+    { required: true, minlength: 2 },
+    password:
+    { required: true, minlength: 5 },
+    confirm_password:
+    { required: true, minlength: 5, equalTo: "#password"},
+    email:
+    { required: true, email: true   },
+    messages:
+    { username:
+    { required: "请输入用户名", minlength: "用户名不能少于2个字"},
+    password:
+    { required: "请输入密码", minlength: "密码不能少于5个字符"},
+    confirm_password:
+    { required: "请输入确认密码", minlength: "确认密码不能少于",
+    equalTo: "密码输入不一致" },
+    email: "请输入有效邮箱"
+    },
+    errorElement: "span", //用来创建错误提示信息标签
+    success: function(label) { //验证成功后的执行的回调函数
+    //label指向上面那个错误提示信息标签em
+    label.text(" ") //清空错误提示消息
+    .addClass("success"); //加上自定义的success类
+    }
+    });
+    });
+    </script>
+</head>
+<body>
+	<div id="d1">
+		<form class="cmxform" id="signupForm">
+			<p>
+				<label for="username"> 用户名 </label>
+				<input id="username" name="username" />
+			</p>
+			<p>
+				<label for="password"> 密码 </label>
+				<input id="password" name="password" type="password" />
+			</p>
+			<p>
+				<label for="confirm_password"> 确认密码 </label>
+				<input id="confirm_password" name="confirm_password" type="password" />
+			</p>
+			<p>
+				<label for="email"> 邮箱 </label>
+				<input id="email" name="email" />
+			</p>
+			<p>
+				<label for="agree"> 是否同意 </label>
+				<input type="checkbox" id="agree" name="agree" />
+			</p>
+			<p>
+				<input class="submit" type="submit" value="提交" />
+			</p>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>表单验证</title>
+        <link type="text/css" rel="Stylesheet" href="../css/form_check.css"/>
+        <script type="text/javascript">
+        //文本框获得焦点时,修改文本框的样式
+                function inputFocus(txtObj, spanID) {       //修改文本框的样式
+        txtObj.className = "txt_focus";
+        //显示提示信息
+        document.getElementById(spanID).style.display = "block";
+        document.getElementById(spanID).className = "";
+        }
+        //验证账号的录入
+                function valiAccount(txtObj, spanID) {          //定义正则表达式进行验证
+        /*定义正则表达式,限制10长度以内的字母、数字的组合*/
+        var reg = /^[A-Za-z0-9]{1,10}$/;
+        var error = reg.test(txtObj.value);
+        //获取spanID,以便修改对应的span的样式
+        var spanObj = document.getElementById(spanID);
+        /*判断验证结果，如果输入符合匹配要求则修改对应的span的样式为验证通过状态，
+        否则修改对应的span的样式为验证失败状态*/
+        if (error) {
+        spanObj.style.display = "block";
+        spanObj.innerHTML = "";
+        spanObj.className = "vali_success";
+        }
+        else {
+        spanObj.style.display = "block";
+        spanObj.className = "vali_fail";
+        spanObj.innerHTML="10长度以内的字母、数字的组合";
+        }
+        //去掉文本框的边框样式
+        txtObj.className = "";
+        //返回验证结果
+        return error;
+        }
+        //验证密码的录入
+                function valiPwd(txtObj, spanID) {          //定义正则表达式进行验证
+        /*定义正则表达式,限制8长度以内的字母、数字和下划线的组合*/
+        var reg = /^\w{1,8}$/;
+        var error = reg.test(txtObj.value);
+        //获取spanID,以便修改对应的span的样式
+        var spanObj = document.getElementById(spanID);
+        /*判断验证结果，如果输入符合匹配要求则修改对应的span的样式为验证通过状态，
+        否则修改对应的span的样式为验证失败状态*/
+        if (error) {
+        spanObj.style.display = "block";
+        spanObj.innerHTML = "";
+        spanObj.className = "vali_success";
+        }
+        else {
+        spanObj.style.display = "block";
+        spanObj.className = "vali_fail";
+        spanObj.innerHTML="8长度以内的字母、数字和下划线的组合";
+        }
+        //去掉文本框的边框样式
+        txtObj.className = "";
+        //返回验证结果
+        return error;
+        }
+        //验证电话号码的录入
+                function valiPhone(txtObj, spanID) {        //定义正则表达式进行验证
+        /*定义正则表达式,限制形如：010-12345678*/
+        var reg = /^\d{3}-\d{8}$/;
+        var error = reg.test(txtObj.value);
+        //获取spanID,以便修改对应的span的样式
+        var spanObj = document.getElementById(spanID);
+        /*判断验证结果，如果输入符合匹配要求则修改对应的span的样式为验证通过状态，
+        否则修改对应的span的样式为验证失败状态*/
+        if (error) {
+        spanObj.style.display = "block";
+        spanObj.innerHTML = "";
+        spanObj.className = "vali_success";
+        }
+        else {
+        spanObj.style.display = "block";
+        spanObj.className = "vali_fail";
+        spanObj.innerHTML="形如：010-12345678";
+        }
+        //去掉文本框的边框样式
+        txtObj.className = "";
+        //返回验证结果
+        return error;
+        }
+        //同时验证各项的录入
+                function validateDatas() {          //验证账号
+        var txtObj = document.getElementById("txtAccount");
+            var r1 = valiAccount(txtObj, "account_msg");    //验证密码
+        var pwdObj = document.getElementById("txtPwd");
+            var r2 = valiPwd(pwdObj, "pwd_msg");    //验证电话号码
+        var phoneObj = document.getElementById("txtPhone");
+        var r3 = valiPhone(phoneObj, "phone_msg");
+        return r1 && r2 && r3;
+        }
+        /*重置所有元素，清空所有元素的内容，*/
+        function reset_all(){
+        /*清空输入框的内容*/
+        var txtObj = document.getElementById("txtAccount");
+        var pwdObj = document.getElementById("txtPwd");
+        var phoneObj = document.getElementById("txtPhone");
+        txtObj.value="";
+        pwdObj.value="";
+        phoneObj.value="";
+        /* 清空span元素的内容*/
+        var account_msgObj = document.getElementById("account_msg");
+        var pwd_msgObj = document.getElementById("pwd_msg");
+        var phone_msgObj = document.getElementById("phone_msg");
+        account_msgObj.className="";
+        account_msgObj.innerHTML="";
+        pwd_msgObj.className="";
+        pwd_msgObj.innerHTML="";
+        phone_msgObj.className="";
+        phone_msgObj.innerHTML="";
+        }
+        </script>
+    </head>
+    <body>
+        <h1>表单验证</h1>
+        <!--账号-->
+        <div class="text_info">管理员账号：</div>
+        <div class="input_info">
+            <!-- 元素onfocus获得焦点改变输入框样式，onblur鼠标移出输入框就验证，元素onmouseout失去焦点也验证 -->
+            <input type="text" id="txtAccount" onfocus="inputFocus(this,'account_msg');" onblur="valiAccount(this, 'account_msg');" onmouseout="valiAccount(this, 'account_msg');"/>
+            <span>*</span>
+        </div>
+        <div class="vali_info">
+            <span id="account_msg">10长度以内的字母、数字的组合</span>
+        </div>
+        <!--密码-->
+        <div class="text_info">密码：</div>
+        <div class="input_info">
+            <input type="password" id="txtPwd" onfocus="inputFocus(this,'pwd_msg');" onblur="valiPwd(this, 'pwd_msg');" onmouseout="valiPwd(this, 'pwd_msg');"/>
+            <span>*</span>
+        </div>
+        <div class="vali_info">
+            <span id="pwd_msg">8长度以内的字母、数字和下划线的组合</span>
+        </div>
+        <!--电话号码-->
+        <div class="text_info">电话号码：</div>
+        <div class="input_info">
+            <input type="text" id="txtPhone" onfocus="inputFocus(this,'phone_msg');" onblur="valiPhone(this, 'phone_msg');" onmouseout="valiPhone(this, 'phone_msg');"/>
+            <span>*</span>
+        </div>
+        <div class="vali_info">
+            <span id="phone_msg">形如：010-12345678</span>
+        </div>
+        <!--操作按钮-->
+        <div class="button_info">
+            <input type="submit" value="保存" onclick="return validateDatas();"/>
+            &nbsp;
+            <input type="reset" value="重置" onclick="reset_all();" />
+        </div>
+    </div>
+</body>
+</html>

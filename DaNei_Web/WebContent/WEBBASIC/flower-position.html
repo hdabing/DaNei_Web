@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>浮动定位</title>
+    <style type="text/css">
+        div {
+            border: 1px solid blue;
+            margin: 3px;
+        }
+
+        #outter {
+            width: 400px;
+        }
+
+        #d1 {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            /*向右浮动*/
+            /*float: right;*/
+            /*左浮动*/
+            float: left;
+        }
+
+        #d2 {
+            width: 150px;
+            height: 150px;
+            background-color: blue;
+            /*向右浮动*/
+            /*float: right;*/
+            /*左浮动*/
+            float: left;
+
+        }
+
+        #d3 {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            /*向右浮动*/
+            /*float: right;*/
+            /*左浮动*/
+            float: left;
+
+        }
+
+        p {
+            border: 1px solid #000;
+            /*消除浮动对p带来的影响*/
+            /*clear: right;*/
+        }
+    </style>
+</head>
+<body>
+<div id="outter">
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div id="d3"></div>
+</div>
+<!--<div style="border: 0;clear: right">--></div>
+<div style="border: 0;clear: left"></div>
+<p>张三、李四、王五</p>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>购物车</title>
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 60%;
+            border: 2px solid #aaa;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+
+            border: 1px solid #aaa;
+            padding: 5px;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+
+    </style>
+    <script type="text/javascript">
+        /*加入购物车*/
+        function add_shoppingcart(btn) {
+            /*根据单击的按钮，获取同行的商品名和单价*/
+            //根据单击的按钮，找到它的爷爷节点tr
+            var tr = btn.parentNode.parentNode;
+            //找出爷爷tr的所有td孩子
+            var tds1 = tr.getElementsByTagName("td");
+            /*第1个td的内容是商品名*/
+            var name = tds1[0].innerText;
+            /*第2个td的内容是单价*/
+            var price = tds1[1].innerText;
+            /*验证获取的商品名和单价是否正确*/
+            /* alert(name+","+price);*/
+
+            var tbody = document.getElementById("goods");//获取购物车中的所有商品行
+            var trs = tbody.getElementsByTagName("tr");//获得tbody里所有行元素组成的数组trs
+            /*遍历tbody里所有行，获取每一行的商品名*/
+            for (var i = 0; i < trs.length; i++) {
+                var tds2 = trs[i].getElementsByTagName("td");//获得购物车里某一行里的所有元素组成的数组tds
+                /*如果加入购物车的商品名与购物车里的某一行的商品名相同，则当前行的商品数量加1，
+                重新计算当前行商品的金额和购物车商品的合计金额，否则新追加1行*/
+                if (tds2[0].innerText == name) {
+                    var inputs = tds2[2].getElementsByTagName("input");//获得单元格元素里的input标签名的所有元素的数组inputs
+                    /*inputs[1].innerText=inputs[1].innerText+1;*///单单这一行达不到预期结果，需要用下面的方法计算
+                    var text = inputs[1];
+                    /*强转为整数类型进行计算*/
+                    var amount = parseInt(text.value);
+                    /*数量自增1*/
+                    text.value = ++amount;
+                    var price = parseFloat(tds2[1].innerText);
+                    var money = amount * price;
+                    tds2[3].innerText = money;
+                    /*计算商品总计金额*/
+                    total();
+                    return;
+                }
+            }
+            /*js只能先创建空的行tr，再设置内容*/
+            var ntr = tbody.insertRow();
+            ntr.innerHTML =
+                    '<td>' + name + '</td>' +
+                    '<td>' + price + '</td>' +
+                    ' <td align="center">' + ' <input type="button" value="-" onclick="decrease_num(this)"/> ' +
+                    '<input type="text" size="3" readonly value="1" /> ' + ' <input type="button" value="+" onclick="increase_num(this)"/>' +
+                    '</td>' + ' <td>' + price + '</td>' + '<td align="center">' +
+                    ' <input type="button" value="x" onclick="del(this);"/>' + '  </td>';
+            /*计算商品总计金额*/
+            total();
+        }
+        /*移除购物车的当前一行的商品，注意不要命名为delete，会冲突*/
+        function del(btn) {
+            /*获取当前单击的删除按钮所在的行*/
+            var tr = btn.parentNode.parentNode;
+            /*删除这一行tr*/
+            tr.parentNode.removeChild(tr);
+            total();
+        }
+        /*添加购物车商品的数量*/
+        function increase_num(btn) {
+            /*获取当前行商品的数量，兄弟的通过父节节点找到，堂兄堂弟的通过爷爷节点找到*/
+            var td = btn.parentNode;//获得按钮的父节点，即是获得当前单元格元素
+            var inputs = td.getElementsByTagName("input");//获得单元格元素里的input标签名的所有元素的数组inputs
+            var text = inputs[1];
+            /*强转为整数类型进行计算*/
+            var amount = parseInt(text.value);
+            /*数量自增1*/
+            text.value = ++amount;
+
+            /*获取当前行商品的单价，兄弟的通过父节节点找到，堂兄堂弟的通过爷爷节点找到*/
+            var tr = btn.parentNode.parentNode;//获得按钮的爷爷节点，即是获得当前行
+            var tds = tr.getElementsByTagName("td");//获得购物车里当前行里的单元格td的所有元素的数组tds
+            var price = parseFloat(tds[1].innerText);//获得tds数组中对应的文本框元素的内容
+
+            /*获取当前行商品的金额，兄弟的通过父节节点找到，堂兄堂弟的通过爷爷节点找到*/
+            var money = amount * price;
+            tds[3].innerText = money;
+            /*计算商品总计金额*/
+            total();
+        }
+        /*减少购物车商品的数量*/
+        function decrease_num(btn) {
+            /*获取当前行商品的数量，兄弟的通过父节节点找到，堂兄堂弟的通过爷爷节点找到*/
+            var td = btn.parentNode;//获得按钮的父节点，即是获得当前单元格元素
+            var inputs = td.getElementsByTagName("input");//获得购物车里单元格元素里的input标签名的所有元素的数组inputs
+            var text = inputs[1];//获得iuputs数组中对应的文本框元素的内容
+            /*强转为整数类型进行计算*/
+            var amount = parseInt(text.value);
+
+            /*判断数量是否等于1，等于时数量不能再减少*/
+            if (amount == 1) {
+                return;
+            }
+            text.value = --amount;
+            /*或者数量>1时，数量自减1*/
+            /* if (amount > 1) {
+             text.value = --amount;
+             }*/
+            /*获取当前行商品的单价，兄弟的通过父节节点找到，堂兄堂弟的通过爷爷节点找到*/
+            var tr = btn.parentNode.parentNode;//获得按钮的爷爷节点，即是获得当前行
+            var tds = tr.getElementsByTagName("td");//获得购物车里当前行里的单元格td的所有元素的数组tds
+            var price = parseFloat(tds[1].innerText);//获得tds数组中对应的文本框元素的内容
+
+            /*获取当前行商品的金额，兄弟的通过父节节点找到，堂兄堂弟的通过爷爷节点找到*/
+            var money = amount * price;
+            tds[3].innerText = money;
+            /*计算商品总计金额*/
+            total();
+        }
+        /*
+
+         /*计算商品总计金额*/
+        function total() {
+
+            /*获取购物车中的所有商品行*/
+            var tbody = document.getElementById("goods");//获得tbody里的所有元素
+            var trs = tbody.getElementsByTagName("tr");//获得tbody里所有行元素组成的数组trs
+
+            /*遍历各行，获取每一行的商品金额值*/
+            var sum = 0;
+            for (var i = 0; i < trs.length; i++) {
+                var tds = trs[i].getElementsByTagName("td");//获得购物车里某一行里的所有元素组成的数组tds
+                var td_money = parseFloat(tds[3].innerText);//获取当前行的金额值，即是当前行的第4列的内容
+                /*将每一行的金额累加*/
+                sum = sum + td_money;
+            }
+
+            /*将合计金额值写入合计列中*/
+            var ttd = document.getElementById("total");
+            ttd.innerText = sum;
+            /*如果当移除所有商品后，总计金额也清空*/
+            if (ttd.innerText == 0) {
+                ttd.innerHTML = "";
+            }
+
+        }
+        /*清空购物车商品*/
+        function clear_all(btn) {
+            var tbody = document.getElementById("goods");
+            /*清空所有行*/
+            tbody.innerHTML = "";
+            /*清空合计金额值*/
+            var ttd = document.getElementById("total");
+            ttd.innerText = "";
+        }
+    </script>
+</head>
+<body>
+<!--DOM节点的增删改查案例--购物车：加入购物车、商品的单价、数量、金额、总计、删除功能-->
+<h1>真划算</h1>
+<!--真划算表格-->
+<table id="list">
+    <thead>
+    <tr>
+        <th>商品</th>
+        <th>单价（元）</th>
+        <th>颜色</th>
+        <th>库存</th>
+        <th>好评率</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>罗技M185鼠标</td>
+        <td>80</td>
+        <td>黑色</td>
+        <td>893</td>
+        <td>98%</td>
+        <td align="center">
+            <input type="button" value="加入购物车" onclick="add_shoppingcart(this);"/>
+        </td>
+    </tr>
+    <tr>
+        <td>微软X470键盘</td>
+        <td>150</td>
+        <td>黑色</td>
+        <td>9028</td>
+        <td>96%</td>
+        <td align="center">
+            <input type="button" value="加入购物车" onclick="add_shoppingcart(this);"/>
+        </td>
+    </tr>
+    <tr>
+        <td>洛克IPhone6手机壳</td>
+        <td>60</td>
+        <td>透明</td>
+        <td>893</td>
+        <td>99%</td>
+        <td align="center">
+            <input type="button" value="加入购物车" onclick="add_shoppingcart(this);"/>
+        </td>
+    </tr>
+    <tr>
+        <td>蓝牙耳机</td>
+        <td>100</td>
+        <td>蓝色</td>
+        <td>8937</td>
+        <td>95%</td>
+        <td align="center">
+            <input type="button" value="加入购物车" onclick="add_shoppingcart(this);"/>
+        </td>
+    </tr>
+    <tr>
+        <td>金士顿U盘</td>
+        <td>70</td>
+        <td>红色</td>
+        <td>482</td>
+        <td>100%</td>
+        <td align="center">
+            <input type="button" value="加入购物车" onclick="add_shoppingcart(this);"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--购物车实现-->
+<h1>购物车</h1>
+<table id="shopping">
+    <thead>
+    <tr>
+        <th>商品</th>
+        <th>单价（元）</th>
+        <th>数量</th>
+        <th>金额（元）</th>
+        <th>删除</th>
+    </tr>
+    </thead>
+    <tbody id="goods">
+    <!--演示用的一行数据-->
+    <!--<tr>
+        <td>罗技M185鼠标</td>
+        <td>80</td>
+        <td align="center">
+            <input type="button" value="-"/>
+            <input type="text" size="3" readonly value="1"/>
+            <input type="button" value="+"/>
+        </td>
+        <td>80</td>
+        <td align="center">
+            <input type="button" value="x"/>
+        </td>
+    </tr>-->
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="3" align="right">总计</th>
+        <td id="total"></td>
+        <td align="center"><input type="button" value="清空" onclick="clear_all()"/></td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>

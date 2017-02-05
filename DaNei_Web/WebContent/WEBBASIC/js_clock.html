@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>秒钟</title>
+    <style type="text/css">
+        p {
+            border: 1px solid #ccc;
+            width: 150px;
+            height: 100px;
+            font-size: 3em;
+        }
+
+        div {
+            font-size: 3em;
+        }
+    </style>
+    <script type="text/javascript">
+        /*定时器的ID*/
+        var id;
+        var index = 1;//默认的毫秒数（单位0.1s）
+        /*启动定时器*/
+        function start1() {
+            /*每隔100ms执行一次，将秒表屏幕中的时间刷新为最新的数据*/
+            id = setInterval(function () {
+                var p = document.getElementById("clock");
+                p.innerHTML = index++;
+            }, 100)
+
+        }
+        function stop1() {
+            /*暂停秒表*/
+            clearInterval(id);
+        }
+        function clear1() {
+            /*将秒表屏幕中的数据清除*/
+            var p = document.getElementById("clock");
+            p.innerHTML = "";
+            /*将毫秒数复位*/
+            index = 1;
+        }
+
+        //显示时间
+        function showTime() {
+            var now = new Date();
+            document.getElementById("pTime").innerHTML = now.toLocaleTimeString();
+        }
+        //启动时钟
+        var timer;
+        function startClock() {
+            if (timer == undefined)
+                timer = window.setInterval(showTime, 1000);
+        }
+        //停止时钟
+        function stopClock() {
+            if (timer != undefined) {
+                window.clearInterval(timer);
+            }
+        }
+    </script>
+</head>
+<body>
+<div>秒钟</div>
+<!--秒钟的屏幕-->
+<p id="clock"></p>
+<button onclick="start1()">开始</button>
+<button onclick="stop1()">暂停</button>
+<button onclick="clear1()">清零</button>
+<hr>
+<br/>
+<input type="button" value="显示时间" onclick="showTime();"/>
+<input type="button" value="启动时钟" onclick="startClock();"/>
+<input type="button" value="停止时钟" onclick="stopClock();"/>
+<br/>
+<div id="pTime"></div>
+</body>
+</html>

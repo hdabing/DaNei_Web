@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>box盒子模型</title>
+    <style type="text/css">
+        p {
+            border: 1px dashed blue;
+        }
+        /*按照图片设置box盒子模型*/
+        #d1 {
+            width: 80px;
+            height: 175px;
+            border: 1px solid red;
+            padding:10px;
+            margin:20px;
+        }
+        /*默认情况下，div的内外边距都是0*/
+        #d2 {
+            width: 100px;
+            height: 50px;
+            border: 1px solid red;
+        }
+        /* 四边设置内外边距*/
+        #d3 {
+            padding: 20px;
+            margin: 40px;
+            background-color: gray;
+        }
+        /*单边设置内外边距*/
+        #d4 {
+            padding: 20px 40px 20px 40px;
+            margin: 20px 40px 20px 40px;
+            /*或可以一个个设置内外边距参数*/
+            /*
+            padding-top: 20px;
+            padding-right: 40px;
+            padding-bottom: 20px;
+            padding-left: 40px;
+            margin-top: 20px;
+            margin-right: 40px;
+            margin-bottom: 20px;
+            margin-left: 40px;
+            */
+
+            background-color: green;
+        }
+        /* 对边设置内外边距,上下左右对边他是设置，margin: 20px auto;设置水平居中*/
+        #d5 {
+            padding: 20px 40px;
+            margin: 20px auto;
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+<h1>box盒子模型</h1>
+<p>块实际占宽=width+2border+2margin+2padding</p>
+<p>块实际占高=height+2border+2margin+2padding</p>
+
+<div id="d1">box盒子模型1--按照图片</div>
+<div id="d2">box盒子模型2--默认情况</div>
+<div id="d3">box盒子模型3--四边设置内外边距</div>
+<div id="d4">box盒子模型4--单边设置内外边距</div>
+<div id="d5">box盒子模型5--对边设置内外边距</div>
+
+</body>
+</html>

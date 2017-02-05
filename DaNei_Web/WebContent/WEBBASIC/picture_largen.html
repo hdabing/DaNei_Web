@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <style type="text/css">
+        p {
+            text-align: center;
+            font-size: 1em;
+        }
+
+        .big {
+            width: 1100px;
+            height: 550px;
+        }
+    </style>
+    <script type="text/javascript">
+        function largen() {
+            var img = document.getElementById("new");
+            /*修改图片的class属性,使其变大largen*/
+            img.className = "big";
+            /*5s之后再重置图片的class，恢复原来大小*/
+            setTimeout(function () {
+                img.className = "";
+            }, 5000)
+        }
+        function margin() {
+            /*鼠标移开图片后，恢复原来大小*/
+            var img = document.getElementById("new");
+            img.className = "";
+        }
+    </script>
+</head>
+<body>
+<div id="title">
+    <p>图片扩大</p>
+    <img src="../images/new.png" id="new" onmouseover="largen()" onmouseout="margin()" ;>
+</div>
+</body>
+</html>
